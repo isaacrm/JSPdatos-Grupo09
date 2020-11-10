@@ -1,5 +1,5 @@
 ﻿<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.sql.*,net.ucanaccess.jdbc.*" %>
-<!--Comentado por RM16034-->
+<!--Comentario de prueba por RM16034-->
 <html>
    <head>
 	   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
