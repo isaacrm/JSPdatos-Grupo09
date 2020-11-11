@@ -1,11 +1,9 @@
 ﻿<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.sql.*,net.ucanaccess.jdbc.*" %>
-<!--Comentario de prueba por RM16034-->
 <html>
    <head>
 	   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Actualizar, eliminar y crear registros</title>
-
       <style type="text/css">
 h1{
   padding-top: 10px;
@@ -188,12 +186,13 @@ if(lsfecha==null)
       <form action="matto.jsp" method="get" name="Actualizar">
          <table>
             <tr>
+               <!--Cambiando disabled por readOnly. Para poder usarlo en metodo get-->
                 <%
                 String controlador=request.getParameter("control");
                   String disa=request.getParameter("disa");
                 if(disa==null){disa="";}
                 else{
-                  disa="disabled";
+                  disa="readOnly";
                 }
                 %>
                <td>ISBN:</td><td id="campo"><input type="text" name="isbn" value="<%=lsisbn%>" size="50" placeholder="&nbsp;0000000000" <%=disa%>/></td>
