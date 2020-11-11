@@ -186,6 +186,7 @@ if(lsfecha==null)
       <form action="matto.jsp" method="get" name="Actualizar">
          <table>
             <tr>
+               <!--Hay que usar JSP y AJAX-->
                <!--Cambiando disabled por readOnly. Para poder usarlo en metodo get-->
                 <%
                 String controlador=request.getParameter("control");
