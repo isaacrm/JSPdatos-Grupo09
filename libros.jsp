@@ -115,7 +115,6 @@ input,select{
   text-align: center;
   display: inline-block;
   position: relative;
-  display: inline-flex;
   color:black;
   margin-left: 11.5%;
 }
@@ -161,10 +160,57 @@ h2{
 h1:hover{color:blue;}
 
 #csv:hover,#json:hover,#xml:hover,#txt:hover{background-color: #E7CDEC;}
-        </style>
-
+      </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    </head>
    <body>
+      <script type="text/javascript">
+         
+         function obtenerLibros() {
+            $.ajax({
+               //tipo de request que se mandará
+               type: "GET",
+               //la página a la que le hará la request (en este caso está en la misma dirección)
+               url: 'consulta.jsp',
+               //tipo de datos que obtendrá (la página ya genera un documento de tipo json)
+               //Nota: ver consulta.jsp, línea 69
+               datatype: "json",
+               //en el caso de recibir un codigo http 200 (OK)
+               success: [
+                  //acción (recibe la respuesta de la request enviada)
+                  function (response) {
+                     //eliminar todos los elementos html que tienen la clase lineaRegistro
+                     $(".lineaRegistro").remove();
+                     //declaración de variable que se usará más adelante
+                     var rowsTabla = '';
+                     //para cada elemento del listado de libros (listado es un objeto json)
+                     //Nota: ver el objeto json generado por consulta.jsp para entenderlo mejor
+                     for(var i = 0; i < response.listado.length; i++) {
+                        var numeroAux=response.listado[i].numero;
+                        var tituloAux=response.listado[i].titulo;
+                        var isbnAux=response.listado[i].isbn;
+                        var editorialAux = response.listado[i].editorial;
+                        var fechaAux = response.listado[i].fecha;
+                        var autorAux = response.listado[i].autor;
+                        //anexar a la variable rowsTabla, una tupla con cada uno de los elementos del listado
+                        //el formato en esta linea es: <tr> <td>columna1</td> <td>columna2</td>...
+                        rowsTabla += '<tr class="lineaRegistro"><td>' + numeroAux + '</td><td>' + isbnAux + '</td><td>' + tituloAux + '</td><td>' + editorialAux + '</td><td>' + fechaAux + '</td><td>'+ autorAux + '</td>';
+                        //copy paste de los botones actualizar y eliminar originales de la tabla
+                        //ESTO SE DEBE CAMBIAR CUANDO LOS BOTONES FUNCIONEN CON AJAX
+                        //a ambos los debe envolver un solo <td>, 
+                        //y despues de Eliminar se debe cerrar el <tr> que se abrió arriba
+                        rowsTabla += "<td><form name=\"form" + numeroAux + "\" method=\"get\" action=\"libros.jsp\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "&disa=1\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
+                        rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=myFunction('"+isbnAux+"')>Eliminar</a></td></tr>";
+                     }
+                     //anexar dentro de tbody, dentro de #tabla, las tuplas generadas
+                     $("#tabla tbody").append(rowsTabla);
+                  }
+               ]
+            });
+         }
+      </script>
+<!--Este es un botón con un único propósito de debug, eliminar antes de la entrega-->
+<input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="obtenerLibros()"/>
 <%
 String lsisbn = request.getParameter("posisbn");
 String lstitulo = request.getParameter("postitulo");
@@ -383,14 +429,14 @@ if(lsfecha==null)
                // Ponemos los resultados en un table de html
                //INICIO DE AGREGADO POR EJERCICIO 5
                if(controlador==null){
-                  out.println("</td><td><center><table id=\"tabla\" border=\"1\"><tr style='background-color:#767A93;'><td>#</td><td>ISBN</td><td id=\"title\"><a href='?order="+orden+"'>Título</a></td><td>Editorial</td><td>Fecha de publicación</td><td>Autor</td><td>Acción</td></tr>");
+                  out.println("</td><td><center><table id=\"tabla\" border=\"1\"><thead style='background-color:#767A93;'><td>#</td><td>ISBN</td><td id=\"title\"><a href='?order="+orden+"'>Título</a></td><td>Editorial</td><td>Fecha de publicación</td><td>Autor</td><td>Acción</td></thead><tbody>");
                   //FIN DE AGREGADO POR EJERCICIO 5
                   int i=1;
                   String isbnAux = "", tituloAux = "", editorialAux = "", fechaAux = "", autorAux = "";
                   while (rs.next())
                   {
                      isbnAux = "";
-                     out.println("<tr>");
+                     out.println("<tr class=\"lineaRegistro\">");
                      out.println("<td>"+ i +"</td>");
                      isbnAux = rs.getString("isbn");
                      out.println("<td>"+isbnAux+"</td>");
@@ -411,7 +457,7 @@ if(lsfecha==null)
                      out.println("</tr>");
                      i++;
                   }
-                  out.println("</table></center>");
+                  out.println("</tbody></table></center>");
                   //INICIO AGREGADO POR EJERCICIO 3
                }else{
                   if(busqueda_C!=null){
@@ -419,11 +465,11 @@ if(lsfecha==null)
                      // Ponemos los resultados en un table de html
                      if(rs.next()){
                         rs=st.executeQuery(busqueda_C);//########### Aca se vuelve a ejecutar la busqueda porque el if de arriba ya lo hizo una vez, entonces mostrará desde el segundo que encontro#########################
-                        out.println("</td><td style='padding-left:45%;'><br></br><h3><b style='color:black;'>El resulado de la búsqueda es:</b></h3><br></br><center><table id=\"tabla\" border=\"1\"><tr style='background-color:#767A93;'><td>#</td><td>ISBN</td><td><a href='?order="+orden+"'>Título</a></td><td>Editorial</td><td>Fecha de publicación</td><td>Autor</td></tr>");
+                        out.println("</td><td style='padding-left:45%;'><br></br><h3><b style='color:black;'>El resulado de la búsqueda es:</b></h3><br></br><center><table id=\"tabla\" border=\"1\"><thead style='background-color:#767A93;'><th>#</th><th>ISBN</th><th><a href='?order="+orden+"'>Título</a></th><th>Editorial</th><th>Fecha de publicación</th><th>Autor</th></thead><tbody>");
                         int i=1;
                         while (rs.next())
                            {
-                           out.println("<tr>");
+                           out.println("<tr class=\"lineaRegistro\">");
                            out.println("<td>"+ i +"</td>");
                            out.println("<td>"+rs.getString("isbn")+"</td>");
                            out.println("<td>"+rs.getString("titulo")+"</td>");
@@ -435,7 +481,7 @@ if(lsfecha==null)
                            out.println("</tr>");
                            i++;
                         }
-                     out.println("</table></center>");
+                     out.println("</tbody></table></center>");
                      }else{
                         out.println("</td><td><br><br><h3><b style='color:red;padding-left:21%;'>No&nbsp;se&nbsp;ha&nbsp;encontrado&nbsp;ningún&nbsp;libro&nbsp;con&nbsp;esas&nbsp;características.</b></h3>");
                      }
