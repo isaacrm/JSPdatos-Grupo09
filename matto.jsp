@@ -128,30 +128,9 @@
 %>
 <html>
     <head><title>Estado de la base de datos</title>
-<style type="text/css">
-body{
-  background-color: #8CF77C;
-}
-
-a{
-  text-decoration: none;
-  color:#0008FF;
-}
-
-a:hover{
-  text-decoration:none;
-font-size: 110%;
-}
-
-#continue{
-  background-color: #AFBBAD;
-  border: black 0.5px solid;
-}
-
-#continue:hover{
-  background-color: #AFD5AB;
-}
-</style>
+    <!--
+Eliminé los estilos, porque esta página ya no va a cargarse visualmente.
+  -->
   </head>
     <body>
         La siguiente instrucción fue ejecutada:

@@ -4,168 +4,75 @@
 	   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Actualizar, eliminar y crear registros</title>
-      <style type="text/css">
-h1{
-  padding-top: 10px;
-  text-align: center;
-  color:black;
-}
-
-#formulario{
-border: black 1px solid;
-display:inline-block;
-padding:1%;
-border-radius: 5px;
-padding-bottom: 0%;
-background-color: #4F71E1;
-}
-
-body{
-  background-color: #BCBECF;
-  color:white;
-}
-
-#campo{
-padding-left: 1%;
-padding-bottom: 1%;
-}
-
-#radio{
-  margin-left: 2%;
-}
-
-.up{
-  background:#4F71E1;
-  color:white;
-  bottom:1%;
-  display:flex;
-  height:50px;
-  position:fixed;
-  right:1%;
-  width:50px;
-  border-radius: 100%;
-  align-items:center;
-  border: black 0.5px solid;
-}
-
-.up:hover{
-  background:#808082;
-}
-
-#save{
-  display:inline-block;
-  position: relative;
-  left:13.5%;
-}
-
-#btnBuscar{
-  padding-top: 1%;
-  padding-bottom: 0px;
-  display:inline-block;
-  position:relative;
-  left:205%;
-  top:6px;
-}
-
-#limpiar{
-padding: 0px;
-}
-
-#busqueda,#btnBuscar,#save,#registro,#actualizate,#eliminate{
-  background-color: #C4BED4;
-}
-
-#actualizate,#eliminate{
-  border:black 0.5px solid;
-  height: 100%;
-  background-color: #C4BED4;
-  width:100%;
-  padding-left:10px;
-  padding-right:10px;
-  padding-left:6px;
-  padding-right:6px;
-  border-radius: 5px;
-  position: relative;
-  display: block;
-}
-
-input,select{
-  border-radius: 3px;
-  border: black 0.5px solid;
-}
-
-#busqueda:hover,#btnBuscar:enabled:hover,#save:hover{
-  background-color: #A6ACD3;
-}
-
-#actualizate:hover{
-  background-color: #A8D3A6;
-  color:black;
-  cursor:pointer;
-}
-
-#eliminate:hover{
-  background-color: #D3A6A6;
-  color:black;
-  cursor:pointer;
-}
-
-#tabla{
-  background-color: #9DA9F4;
-  text-align: center;
-  display: inline-block;
-  position: relative;
-  color:black;
-  margin-left: 11.5%;
-}
-
-#tabla td{
-padding:1%;
-border:black 0.5 solid;
-}
-
-a{color:black;}
-
-a:hover{
-  text-decoration:none;
-  color:blue;}
-
-#lista{
-  position:relative;
-  display:block;
-  top:1%;
-  color:black;}
-
-h2{
-  color:black;
-  text-align: center;}
-
-#descargas{
-  position:relative;
-  left:35%;}
-
-#csv,#json,#xml,#txt{
-  position:relative;
-  display: inline-block;
-  border:black 0.5px solid;
-  font-size: 20px;
-  width: 100%;
-  background-color: #AB9DD3;
-  border-radius: 5px;
-  margin-top: 1%;
-  color:black;
-  padding:10px;
-  text-align: center;}
-
-h1:hover{color:blue;}
-
-#csv:hover,#json:hover,#xml:hover,#txt:hover{background-color: #E7CDEC;}
-      </style>
+      <link rel="stylesheet" href="style.css" type="text/css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    </head>
    <body>
+
       <script type="text/javascript">
-         
+//Implementé este código (DESDE AQUÍ).
+              function guardar(){
+//Esta función se ejecuta al presionar el botón 'GUARDAR'.
+                var isbn,titulo,autor,fecha,editorial;
+                isbn = document.getElementById("isbn");
+                titulo = document.getElementById("titulo");
+                autor = document.getElementById("autor");
+                fecha = document.getElementById("fecha");
+                editorial = document.getElementById("editorial");
+
+                  if(document.getElementById("crear").checked){
+                    crear(isbn,titulo,autor,fecha,editorial);
+                }else if (document.getElementById("eliminar").checked) {
+                  eliminar(isbn,titulo);
+                }else{
+                  actualizar(isbn,titulo,autor,fecha,editorial);}}
+//Esta función limpia los campos del formulario después de realizar una acción.
+                function limpiarFormulario(){
+                  var isbn,titulo,autor,fecha,editorial;
+                  isbn = document.getElementById("isbn");
+                  titulo = document.getElementById("titulo");
+                  autor = document.getElementById("autor");
+                  fecha = document.getElementById("fecha");
+                  editorial = document.getElementById("editorial");
+                  isbn.value="";
+                  titulo.value="";
+                  autor.value="";
+                  fecha.value="";
+                  editorial.value="";}
+//Esta función elimina registros de la base de datos.
+              function eliminar(isbn,titulo){
+                var confirmar;
+                confirmar=confirm("Estás seguro que deseas eliminar "+titulo.value+" del registro?");
+                if(confirmar){
+                  $.ajax({
+                     type: "GET",
+                     url: 'matto.jsp?isbn='+isbn.value+'&titulo='+titulo.value+'&autor='+autor.value+'&listaEditorial='+editorial.value+'&Anio='+fecha.value+'&Action=Eliminar&boton_A=GUARDAR',
+                     datatype: "json",
+                     success: [function (response) {
+                       obtenerLibros();
+                       limpiarFormulario();
+                       document.getElementById("crear").checked=true;}]});}}
+//Esta función actualiza registros de la base de datos.
+              function actualizar(isbn,titulo,autor,fecha,editorial){
+                $.ajax({
+                   type: "GET",
+                   url: 'matto.jsp?isbn='+isbn.value+'&titulo='+titulo.value+'&autor='+autor.value+'&listaEditorial='+editorial.value+'&Anio='+fecha.value+'&Action=Actualizar&boton_A=GUARDAR',
+                   datatype: "json",
+                   success: [function (response) {
+                     obtenerLibros();
+                     isbn.readOnly=false;
+                     document.getElementById("crear").checked=true;
+                     limpiarFormulario();}]});}
+//Esta función inserta registros en la base de datos.
+              function crear(isbn,titulo,autor,fecha,editorial){
+                $.ajax({
+                   type: "GET",
+                   url: 'matto.jsp?isbn='+isbn.value+'&titulo='+titulo.value+'&autor='+autor.value+'&listaEditorial='+editorial.value+'&Anio='+fecha.value+'&Action=Crear&boton_A=GUARDAR',
+                   datatype: "json",
+                   success: [function (response) {
+                  obtenerLibros();
+                  limpiarFormulario();}]});}
+//(HASTA AQUÍ).
          function obtenerLibros() {
             $.ajax({
                //tipo de request que se mandará
@@ -192,14 +99,15 @@ h1:hover{color:blue;}
                         var editorialAux = response.listado[i].editorial;
                         var fechaAux = response.listado[i].fecha;
                         var autorAux = response.listado[i].autor;
+
                         //anexar a la variable rowsTabla, una tupla con cada uno de los elementos del listado
                         //el formato en esta linea es: <tr> <td>columna1</td> <td>columna2</td>...
                         rowsTabla += '<tr class="lineaRegistro"><td>' + numeroAux + '</td><td>' + isbnAux + '</td><td>' + tituloAux + '</td><td>' + editorialAux + '</td><td>' + fechaAux + '</td><td>'+ autorAux + '</td>';
                         //copy paste de los botones actualizar y eliminar originales de la tabla
                         //ESTO SE DEBE CAMBIAR CUANDO LOS BOTONES FUNCIONEN CON AJAX
-                        //a ambos los debe envolver un solo <td>, 
+                        //a ambos los debe envolver un solo <td>,
                         //y despues de Eliminar se debe cerrar el <tr> que se abrió arriba
-                        rowsTabla += "<td><form name=\"form" + numeroAux + "\" method=\"get\" action=\"libros.jsp\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "&disa=1\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
+                        rowsTabla += "<td><form name=\"form" + numeroAux + "\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "&disa=1\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
                         rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=myFunction('"+isbnAux+"')>Eliminar</a></td></tr>";
                      }
                      //anexar dentro de tbody, dentro de #tabla, las tuplas generadas
@@ -209,14 +117,20 @@ h1:hover{color:blue;}
             });
          }
       </script>
-<!--Este es un botón con un único propósito de debug, eliminar antes de la entrega-->
+<!--
+Este es un botón con un único propósito de debug, eliminar antes de la entrega.
+Descomentar el botón para probar la función que actualiza la tabla.
+
 <input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="obtenerLibros()"/>
+
+-->
 <%
 String lsisbn = request.getParameter("posisbn");
 String lstitulo = request.getParameter("postitulo");
 String lseditorial = request.getParameter("poseditorial");
 String lsfecha = request.getParameter("posfecha");
 String lsautor = request.getParameter("posautor");
+
 if(lsisbn==null)
    lsisbn="";
 if(lstitulo==null)
@@ -229,7 +143,7 @@ if(lsfecha==null)
    lsfecha="";
 %>
       <br><a id="home" href=libros.jsp><H1>MANTENIMIENTO DE LIBROS</H1></a><br><center><div id="formulario">
-      <form action="matto.jsp" method="get" name="Actualizar">
+      <form name="Actualizar">
          <table>
             <tr>
                <!--Hay que usar JSP y AJAX con un SPA-->
@@ -242,21 +156,21 @@ if(lsfecha==null)
                   disa="readOnly";
                 }
                 %>
-               <td>ISBN:</td><td id="campo"><input type="text" name="isbn" value="<%=lsisbn%>" size="50" placeholder="&nbsp;0000000000" <%=disa%>/></td>
+               <td>ISBN:</td><td id="campo"><input id="isbn" type="text" name="isbn" value="<%=lsisbn%>" size="50" placeholder="&nbsp;0000000000" <%=disa%>/></td>
             </tr>
             <tr>
-               <td id="title">Título:</td><td id="campo"><input type="text" name="titulo" value="<%=lstitulo%>" size="50" placeholder="&nbsp;Ingrese un libro..."/></td>
+               <td id="title">Título:</td><td id="campo"><input id="titulo" type="text" name="titulo" value="<%=lstitulo%>" size="50" placeholder="&nbsp;Ingrese un libro..."/></td>
             </tr>
             <!--INICIO DE AGREGADO POR EJERCICIO 5 (Campo Autor)-->
             <tr>
-               <td>Autor:</td><td id="campo"><input type="text" name="autor" value="<%=lsautor%>" size="50" placeholder="&nbsp;Ingrese un autor..."/></td>
+               <td>Autor:</td><td id="campo"><input type="text" id="autor" name="autor" value="<%=lsautor%>" size="50" placeholder="&nbsp;Ingrese un autor..."/></td>
             </tr>
             <!--FIN DE AGREGADO POR EJERCICIO 5-->
             <!-- listbox de editorial ejerciocio 7 */ -->
             <!------------------------------ comienzo de corrrecion ------------------->
             <tr>
                <td>Editorial:</td><td id="campo">
-                  <select name="listaEditorial" >
+                  <select name="listaEditorial" id="editorial">
                      <option value= "">Elija su editorial...</option>
                      <optgroup>
                         <%
@@ -295,7 +209,7 @@ if(lsfecha==null)
             <tr>
                <td>
                   <label>Fecha de publicación: </label></td><td id="campo">
-                  <input type="date" name="Anio" value="<%=lsfecha%>">
+                  <input type="date" id="fecha" name="Anio" value="<%=lsfecha%>">
                </td>
             <tr>
             <!------------------------------ fin de corrrecion               ------------------->
@@ -308,17 +222,17 @@ if(lsfecha==null)
                      else
                         valor2 = "checked";
                   %>
-                  <input style="margin-left: 1%;" type="radio" name="Action" value="Actualizar" <%=valor1%> /> Actualizar
-                  <input id="radio" type="radio" name="Action" value="Eliminar" /> Eliminar
-                  <input id="radio" type="radio" name="Action" value="Crear" <%=valor2%> /> Crear
-                  <input id="save" type="SUBMIT" name="boton_A" value="GUARDAR"/>
+                  <input style="margin-left: 1%;" type="radio" id="actualizar" name="Action" value="Actualizar" <%=valor1%> /> Actualizar
+                  <input id="eliminar" type="radio" name="Action" value="Eliminar" /> Eliminar
+                  <input id="crear" type="radio" name="Action" value="Crear" <%=valor2%> /> Crear
+                  <input id="save" type="button" name="boton_A" onclick=guardar() value="GUARDAR"/>
                </td>
                <!--BOTON CON NOMBRE CAMBIADO-->
             </tr>
          </table>
       </form>
       <!--INICIO DE AGREGADO POR EJERCICIO 3 (busqueda)-->
-      <form style="text-align:left;" name="formbusca" action="matto.jsp" method="GET">
+      <form style="text-align:left;" name="formbusca">
          <!--INICIO DE AGREGADO EJERCICIO 6-->
          <table>
             <tr>
@@ -377,7 +291,7 @@ if(lsfecha==null)
       document.getElementById("txtAutor").addEventListener("keyup", habilitar);
       document.getElementById("btnBuscar").addEventListener("click", () => {});
       </script>
-      <form id="limpiar" name="formlimpiar" action="libros.jsp" method="get">
+      <form id="limpiar" name="formlimpiar">
          <input id="busqueda" type="submit" name="limpiar" value="LIMPIAR BÚSQUEDA">
       </form></div></center>
       <!--FIN AGREGADO VALIDACION DE BOTON BUSCAR EJERCICIO 6-->
@@ -449,7 +363,7 @@ if(lsfecha==null)
                      autorAux = rs.getString("autor");
                      out.println("<td>"+autorAux+"</td>");
                      out.println("<td>");%>
-                     <form name='form<%=i%>' method='get' action='libros.jsp'><!-- este formulario se mete para obtener los atributos para la actualizacion -->
+                     <form name='form<%=i%>'><!-- este formulario se mete para obtener los atributos para la actualizacion -->
                         <a id="actualizate" href="libros.jsp?posisbn=<%=isbnAux%>&postitulo=<%=tituloAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=1" style="width:100%;background-color:#style="width:10%;"">Actualizar</a>
                      </form>
                      <%

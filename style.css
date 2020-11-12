@@ -1,0 +1,155 @@
+h1{
+padding-top: 10px;
+text-align: center;
+color:black;
+}
+
+#formulario{
+border: black 1px solid;
+display:inline-block;
+padding:1%;
+border-radius: 5px;
+padding-bottom: 0%;
+background-color: #4F71E1;
+}
+
+body{
+background-color: #BCBECF;
+color:white;
+}
+
+#campo{
+padding-left: 1%;
+padding-bottom: 1%;
+}
+
+#eliminar,#crear{
+margin-left: 2%;
+}
+
+.up{
+background:#4F71E1;
+color:white;
+bottom:1%;
+display:flex;
+height:50px;
+position:fixed;
+right:1%;
+width:50px;
+border-radius: 100%;
+align-items:center;
+border: black 0.5px solid;
+}
+
+.up:hover{
+background:#808082;
+}
+
+#save{
+display:inline-block;
+position: relative;
+left:13.5%;
+}
+
+#btnBuscar{
+padding-top: 1%;
+padding-bottom: 0px;
+display:inline-block;
+position:relative;
+left:205%;
+top:6px;
+}
+
+#limpiar{
+padding: 0px;
+}
+
+#busqueda,#btnBuscar,#save,#registro,#actualizate,#eliminate{
+background-color: #C4BED4;
+}
+
+#actualizate,#eliminate{
+border:black 0.5px solid;
+height: 100%;
+background-color: #C4BED4;
+width:100%;
+padding-left:10px;
+padding-right:10px;
+padding-left:6px;
+padding-right:6px;
+border-radius: 5px;
+position: relative;
+display: block;
+}
+
+input,select{
+border-radius: 3px;
+border: black 0.5px solid;
+}
+
+#busqueda:hover,#btnBuscar:enabled:hover,#save:hover{
+background-color: #A6ACD3;
+}
+
+#actualizate:hover{
+background-color: #A8D3A6;
+color:black;
+cursor:pointer;
+}
+
+#eliminate:hover{
+background-color: #D3A6A6;
+color:black;
+cursor:pointer;
+}
+
+#tabla{
+background-color: #9DA9F4;
+text-align: center;
+display: inline-block;
+position: relative;
+color:black;
+margin-left: 11.5%;
+}
+
+#tabla td{
+padding:1%;
+border:black 0.5 solid;
+}
+
+a{color:black;}
+
+a:hover{
+text-decoration:none;
+color:blue;}
+
+#lista{
+position:relative;
+display:block;
+top:1%;
+color:black;}
+
+h2{
+color:black;
+text-align: center;}
+
+#descargas{
+position:relative;
+left:35%;}
+
+#csv,#json,#xml,#txt{
+position:relative;
+display: inline-block;
+border:black 0.5px solid;
+font-size: 20px;
+width: 100%;
+background-color: #AB9DD3;
+border-radius: 5px;
+margin-top: 1%;
+color:black;
+padding:10px;
+text-align: center;}
+
+h1:hover{color:blue;}
+
+#csv:hover,#json:hover,#xml:hover,#txt:hover{background-color: #E7CDEC;}
