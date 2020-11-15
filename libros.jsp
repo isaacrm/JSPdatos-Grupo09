@@ -11,6 +11,7 @@
 
       <script type="text/javascript" src="metodos.js">
       </script>
+      <script src="jquery-1.12.2.min.js"></script>
 <!--
 Este es un botón con un único propósito de debug, eliminar antes de la entrega.
 Descomentar el botón para probar la función que actualiza la tabla.
@@ -126,7 +127,7 @@ if(lsfecha==null)
          </table>
       </form>
       <!--INICIO DE AGREGADO POR EJERCICIO 3 (busqueda)-->
-      <form style="text-align:left;" name="formbusca" action="matto.jsp">
+      <form style="text-align:left;" name="formbusca" onsubmit="">
          <!--INICIO DE AGREGADO EJERCICIO 6-->
          <table>
             <tr>
@@ -148,7 +149,7 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  <center><input type="SUBMIT" name="boton_B" id="btnBuscar" value="BUSCAR" disabled/></center>
+                  <center><input type="submit" id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/></center>
                </td>
             </tr>
          </table>
@@ -267,35 +268,10 @@ if(lsfecha==null)
                   }
                   out.println("</tbody></table></center>");
                   //INICIO AGREGADO POR EJERCICIO 3
-               }else{
-                  if(busqueda_C!=null){
-                     rs=st.executeQuery(busqueda_C);
-                     // Ponemos los resultados en un table de html
-                     if(rs.next()){
-                        rs=st.executeQuery(busqueda_C);//########### Aca se vuelve a ejecutar la busqueda porque el if de arriba ya lo hizo una vez, entonces mostrará desde el segundo que encontro#########################
-                        out.println("</td><td style='padding-left:45%;'><br></br><h3><b style='color:black;'>El resulado de la búsqueda es:</b></h3><br></br><center><table id=\"tabla\" border=\"1\"><thead style='background-color:#767A93;'><th>#</th><th>ISBN</th><th><a href='?order="+orden+"'>Título</a></th><th>Editorial</th><th>Fecha de publicación</th><th>Autor</th></thead><tbody>");
-                        int i=1;
-                        while (rs.next())
-                           {
-                           out.println("<tr class=\"lineaRegistro\">");
-                           out.println("<td>"+ i +"</td>");
-                           out.println("<td>"+rs.getString("isbn")+"</td>");
-                           out.println("<td>"+rs.getString("titulo")+"</td>");
-                           out.println("<td>"+rs.getString("Editorial")+"</td>");
-                           out.println("<td>"+rs.getString("Anio")+"</td>");
-                           /*INICIO DE AGREGADO POR EJERCICIO 5*/
-                           out.println("<td>"+rs.getString("autor")+"</td>");
-                           /*FIN DE AGREGADO POR EJERCICIO 5*/
-                           out.println("</tr>");
-                           i++;
-                        }
-                     out.println("</tbody></table></center>");
-                     }else{
-                        out.println("</td><td><br><br><h3><b style='color:red;padding-left:21%;'>No&nbsp;se&nbsp;ha&nbsp;encontrado&nbsp;ningún&nbsp;libro&nbsp;con&nbsp;esas&nbsp;características.</b></h3>");
-                     }
-                  }
                }
-               //FIN AGREGADO POR EJERCICIO 3
+               %>
+                  <input  id="resultados" type="text" value=""></input>>
+               <%
                // cierre de la conexion
                conexion.close();
          }
