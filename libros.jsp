@@ -134,13 +134,13 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  Título a buscar:</td><td id="campo">
+                  Título a buscar:</td><td >
                   <input type="text" name="titulo_B" id="txtTitulo" placeholder="&nbsp;Ingrese un título..." size="55"/>
                </td>
             </tr>
             <tr>
                <td>
-                  Autor a buscar:</td><td id="campo">
+                  Autor a buscar:</td><td >
                   <input type="text" name="autor_B" id="txtAutor" placeholder="&nbsp;Ingrese un autor..." size="55"/>
                </td>
             </tr>

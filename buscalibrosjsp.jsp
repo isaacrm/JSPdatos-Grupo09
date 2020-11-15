@@ -48,18 +48,18 @@ if (!conexion.isClosed()){
         ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
         //obtener cantidad de resultados        
         ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%';");
-        cantidad = conteoSQL.getInt(1);
         conteoSQL.next();
+        cantidad = conteoSQL.getInt(1);
         //obtener listado de libros
-         conjuntoResultados = sentencia.executeQuery(ls_query );
+        conjuntoResultados = sentencia.executeQuery(ls_query );
     }
     else if (ls_autor_B != "") {
         ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
         ls_query += " where autor like " + "'%" + ls_autor_B +"%'";
         //obtener cantidad de resultados        
-        ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where autor like " + "'%" + ls_autor_B +"%';");
+        ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where autor like " + "'%" +ls_autor_B +"%';");
         conteoSQL.next();
-         cantidad = conteoSQL.getInt(1);
+        cantidad = conteoSQL.getInt(1);
         //obtener listado de libros
         conjuntoResultados = sentencia.executeQuery(ls_query );
     }
