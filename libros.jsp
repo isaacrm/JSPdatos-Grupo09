@@ -149,7 +149,7 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  <center><input type="SUBMIT"  id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/></center>
+                  <center><input type="button"  id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/></center>
                </td>
             </tr>
          </table>
