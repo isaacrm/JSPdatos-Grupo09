@@ -15,9 +15,9 @@
 <!--
 Este es un botón con un único propósito de debug, eliminar antes de la entrega.
 Descomentar el botón para probar la función que actualiza la tabla.
--->
-<input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="busqueda()"/>
 
+<input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="busqueda()"/>
+-->
 
 <%
 String lsisbn = request.getParameter("posisbn");
