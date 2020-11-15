@@ -28,19 +28,19 @@ if (!conexion.isClosed()){
     Statement sentencia = conexion.createStatement();
      String ls_autor_B= request.getParameter("autor_B");    
      String ls_titulo_B= request.getParameter("titulo_B");
-     String ls_query="";
-    
-    
-     if(ls_titulo_B != "" && ls_autor_B != "") {
+     String ls_query=" select * from libros";
+    ResultSet conjuntoResultados=sentencia.executeQuery(ls_query);
+    int cantidad =0;
+    if(ls_titulo_B != "" && ls_autor_B != "") {
         ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
         ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
         ls_query += " or autor like " + "'%" + ls_autor_B +"%'";
         //obtener cantidad de resultados        
         ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%'"+" or autor like " + "'%" + ls_autor_B +"%';");
         conteoSQL.next();
-        int cantidad = conteoSQL.getInt(1);
+        cantidad = conteoSQL.getInt(1);
         //obtener listado de libros
-        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
+        conjuntoResultados = sentencia.executeQuery(ls_query );
         
     }
     else if (ls_titulo_B != "") {
@@ -48,10 +48,10 @@ if (!conexion.isClosed()){
         ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
         //obtener cantidad de resultados        
         ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%';");
-        int cantidad = conteoSQL.getInt(1);
+        cantidad = conteoSQL.getInt(1);
         conteoSQL.next();
         //obtener listado de libros
-        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
+         conjuntoResultados = sentencia.executeQuery(ls_query );
     }
     else if (ls_autor_B != "") {
         ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
@@ -59,9 +59,9 @@ if (!conexion.isClosed()){
         //obtener cantidad de resultados        
         ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where autor like " + "'%" + ls_autor_B +"%';");
         conteoSQL.next();
-        int cantidad = conteoSQL.getInt(1);
+         cantidad = conteoSQL.getInt(1);
         //obtener listado de libros
-        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
+        conjuntoResultados = sentencia.executeQuery(ls_query );
     }
     
     out.println("{");
