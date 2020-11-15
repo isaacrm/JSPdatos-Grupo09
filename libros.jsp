@@ -15,10 +15,10 @@
 <!--
 Este es un botón con un único propósito de debug, eliminar antes de la entrega.
 Descomentar el botón para probar la función que actualiza la tabla.
-
-<input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="obtenerLibros()"/>
-
 -->
+<input type="submit" value="Presiona aquí para actualizar la tabla" id="obtener" onclick="busqueda()"/>
+
+
 <%
 String lsisbn = request.getParameter("posisbn");
 String lstitulo = request.getParameter("postitulo");
@@ -126,10 +126,7 @@ if(lsfecha==null)
             </tr>
          </table>
       </form>
-      <!--INICIO DE AGREGADO POR EJERCICIO 3 (busqueda)-->
-      <form style="text-align:left;" name="formbusca" onsubmit="">
-         <!--INICIO DE AGREGADO EJERCICIO 6-->
-         <table>
+            <table>
             <tr>
                <td colspan="2" style="padding-bottom:1%; color:white;">
                   NOTA: Puede realizar la búsqueda por título, por autor, o ambos a la vez.
@@ -149,13 +146,10 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  <center><input type="submit" id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/></center>
+                  <center><input type="submit" id="btnBuscar" value="BUSCAR"  onclick="busqueda()" disabled/></center>
                </td>
             </tr>
          </table>
-         <!--FIN DE AGREGADO EJERCICIO 6-->
-      </form>
-      <!--FIN DE AGREGADO POR EJERCICIO 3-->
       <!--INICIO AGREGADO VALIDACION DE BOTON BUSCAR EJERCICIO 6-->
       <script type="text/javascript">
       //document.getElementsByClassName("delete").onclick = function() {myFunction()};
