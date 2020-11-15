@@ -105,3 +105,89 @@ function guardar(){
                    ]
                 });
              }
+             
+function busqueda(){
+   var titulo_B,autor_B;
+   titulo_B=document.getElementById("txtTitulo");
+   autor_B=document.getElementById("txtAutor");
+   
+   if(document.getElementById("txtTitulo")!= "" && document.getElementById("txtAutor")!= ""){
+      $.ajax({
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?titulo_B='+titulo_B.value+'&autor_B='+autor_B.value+'&boton_B=BUSCAR',
+         datatype: "json",
+         success: [function (response) {
+            $(".lineaRegistro").remove();
+               var rowsTabla = '';
+               for(var i = 0; i < response.listado.length; i++) {
+                  var numeroAux=response.listado[i].numero;
+                  var tituloAux=response.listado[i].titulo;
+                  var isbnAux=response.listado[i].isbn;
+                  var editorialAux = response.listado[i].editorial;
+                  var fechaAux = response.listado[i].fecha;
+                  var autorAux = response.listado[i].autor;
+
+                  rowsTabla += '<tr class="lineaRegistro"><td>' + numeroAux + '</td><td>' + isbnAux + '</td><td>' + tituloAux + '</td><td>' + editorialAux + '</td><td>' + fechaAux + '</td><td>'+ autorAux + '</td>';
+                  rowsTabla += "<td><form name=\"form" + numeroAux + "\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
+                  rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=myFunction('"+isbnAux+"')>Eliminar</a></td></tr>";
+               }
+               $("#tabla tbody").append(rowsTabla);}
+         ]
+      });
+   }
+   else if(document.getElementById("txtTitulo")!= ""){
+      $.ajax({
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?titulo_B='+titulo_B.value+'&boton_B=BUSCAR',
+         datatype: "json",
+         success: [function (response) {
+            $(".lineaRegistro").remove(); 
+               var rowsTabla = '';
+               for(var i = 0; i < response.listado.length; i++) {
+                  var numeroAux=response.listado[i].numero;
+                  var tituloAux=response.listado[i].titulo;
+                  var isbnAux=response.listado[i].isbn;
+                  var editorialAux = response.listado[i].editorial;
+                  var fechaAux = response.listado[i].fecha;
+                  var autorAux = response.listado[i].autor;
+
+                  rowsTabla += '<tr class="lineaRegistro"><td>' + numeroAux + '</td><td>' + isbnAux + '</td><td>' + tituloAux + '</td><td>' + editorialAux + '</td><td>' + fechaAux + '</td><td>'+ autorAux + '</td>';
+                  rowsTabla += "<td><form name=\"form" + numeroAux + "\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
+                  rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=myFunction('"+isbnAux+"')>Eliminar</a></td></tr>";
+               }
+               $("#tabla tbody").append(rowsTabla);}
+         ]
+      });
+      
+   }
+   else if(document.getElementById("txtAutor")!= ""){
+      $.ajax({
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?autor_B='+autor_B.value+'&boton_B=BUSCAR',
+         datatype: "json",
+         success: [function (response) {
+            $(".lineaRegistro").remove();
+               var rowsTabla = '';
+               for(var i = 0; i < response.listado.length; i++) {
+                  var numeroAux=response.listado[i].numero;
+                  var tituloAux=response.listado[i].titulo;
+                  var isbnAux=response.listado[i].isbn;
+                  var editorialAux = response.listado[i].editorial;
+                  var fechaAux = response.listado[i].fecha;
+                  var autorAux = response.listado[i].autor;
+
+                  rowsTabla += '<tr class="lineaRegistro"><td>' + numeroAux + '</td><td>' + isbnAux + '</td><td>' + tituloAux + '</td><td>' + editorialAux + '</td><td>' + fechaAux + '</td><td>'+ autorAux + '</td>';
+                  rowsTabla += "<td><form name=\"form" + numeroAux + "\"><a id=\"actualizate\" href=\"libros.jsp?posisbn=" + isbnAux + "&postitulo=" + tituloAux + "&poseditorial=" + editorialAux + "&posfecha=" + fechaAux + "&posautor=" + autorAux + "\" style=width:100%;background-color:#style=width:10%;>Actualizar</a></form>";
+                  rowsTabla += "</td></tr>";
+               }
+               $("#tabla tbody").append(rowsTabla);}
+         ]
+      });
+   
+   }
+   var titulo_limp,autor_limp;
+   autor_limp = document.getElementById("txtAutor");
+   titulo_limp = document.getElementById("txtTitulo");
+   titulo_limp.value="";
+   autor_limp.value="";
+}
