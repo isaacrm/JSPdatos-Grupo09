@@ -66,7 +66,7 @@ if (!conexion.isClosed()){
     
     out.println("{");
     out.println("   \"listado\":");
-    out.println("       [");
+    out.println("       ["); 
     //inicio conteo manual
     int numero = 1;
     //Declaración formato JSON (final de elemento)

@@ -180,7 +180,7 @@ if(lsfecha==null)
       document.getElementById("txtAutor").addEventListener("keyup", habilitar);
       document.getElementById("btnBuscar").addEventListener("click", () => {});
       </script>
-      <form id="limpiar" name="formlimpiar">
+      <form id="limpiar" name="formlimpiar"> 
          <input id="busqueda" type="submit" name="limpiar" value="LIMPIAR BÚSQUEDA">
       </form></div></center>
       <!--FIN AGREGADO VALIDACION DE BOTON BUSCAR EJERCICIO 6-->

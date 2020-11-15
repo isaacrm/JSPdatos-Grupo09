@@ -153,7 +153,7 @@ function busqueda(){
          url: 'buscalibrosjsp.jsp?titulo_B='+titulo_B.value+'&boton_B=BUSCAR',
          datatype: "json",
          success: [function (response) {
-            $(".lineaRegistro").remove();
+            $(".lineaRegistro").remove(); 
                var rowsTabla = '';
                for(var i = 0; i < response.listado.length; i++) {
                   var numeroAux=response.listado[i].numero;
