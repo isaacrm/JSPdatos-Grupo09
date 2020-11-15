@@ -268,10 +268,39 @@ if(lsfecha==null)
                   }
                   out.println("</tbody></table></center>");
                   //INICIO AGREGADO POR EJERCICIO 3
+               }else{
+                  out.println("</td><td><center><table id=\"tabla\" border=\"1\"><thead style='background-color:#767A93;'><td>#</td><td>ISBN</td><td id=\"title\"><a href='?order="+orden+"'>Título</a></td><td>Editorial</td><td>Fecha de publicación</td><td>Autor</td><td>Acción</td></thead><tbody>");
+                     //FIN DE AGREGADO POR EJERCICIO 5
+                     int i=1;
+                     String isbnAux = "", tituloAux = "", editorialAux = "", fechaAux = "", autorAux = "";
+                     while (rs.next())
+                     {
+                        isbnAux = "";
+                        out.println("<tr class=\"lineaRegistro\">");
+                        out.println("<td>"+ i +"</td>");
+                        isbnAux = rs.getString("isbn");
+                        out.println("<td>"+isbnAux+"</td>");
+                        tituloAux = rs.getString("titulo");
+                        out.println("<td>"+tituloAux+"</td>");
+                        editorialAux = rs.getString("Editorial");
+                        out.println("<td>"+ editorialAux +"</td>");
+                        fechaAux = rs.getString("Anio");
+                        out.println("<td>"+ fechaAux +"</td>");
+                        autorAux = rs.getString("autor");
+                        out.println("<td>"+autorAux+"</td>");
+                        out.println("<td>");%>
+                        <form name='form<%=i%>'><!-- este formulario se mete para obtener los atributos para la actualizacion -->
+                           <a id="actualizate" href="libros.jsp?posisbn=<%=isbnAux%>&postitulo=<%=tituloAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=1" style="width:100%;background-color:#style="width:10%;"">Actualizar</a>
+                        </form>
+                        <%
+                        out.println("<a id='eliminate' style='width:100%;' onclick=myFunction('"+isbnAux+"')>Eliminar</a></td>");
+                        out.println("</tr>");
+                        i++;
+                     }
+                     out.println("</tbody></table></center>");
                }
-               %>
-                  <input  id="resultados" type="text" value=""></input>>
-               <%
+               
+               
                // cierre de la conexion
                conexion.close();
          }

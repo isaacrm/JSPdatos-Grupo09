@@ -125,8 +125,8 @@ function busqueda(){
    
    if(document.getElementById("txtTitulo")!= "" && document.getElementById("txtAutor")!= ""){
       $.ajax({
-         type: "POST",
-         url: 'matto.jsp?titulo_B='+titulo_B.value+'&autor_B='+autor_B.value+'&boton_B=BUSCAR',
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?titulo_B='+titulo_B.value+'&autor_B='+autor_B.value+'&boton_B=BUSCAR',
          datatype: "json",
          success: [function (response) {
             $(".lineaBusqueda").remove();
@@ -149,8 +149,8 @@ function busqueda(){
    }
    else if(document.getElementById("txtTitulo")!= ""){
       $.ajax({
-         type: "POST",
-         url: 'matto.jsp?titulo_B='+titulo_B.value+'&boton_B=BUSCAR',
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?titulo_B='+titulo_B.value+'&boton_B=BUSCAR',
          datatype: "json",
          success: [function (response) {
             $(".lineaBusqueda").remove();
@@ -174,8 +174,8 @@ function busqueda(){
    }
    else if(document.getElementById("txtAutor")!= ""){
       $.ajax({
-         type: "POSt",
-         url: 'matto.jsp?autor_B='+autor_B.value+'&boton_B=BUSCAR',
+         type: "GET",
+         url: 'buscalibrosjsp.jsp?autor_B='+autor_B.value+'&boton_B=BUSCAR',
          datatype: "json",
          success: [function (response) {
             $(".lineaBusqueda").remove();

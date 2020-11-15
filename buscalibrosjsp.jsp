@@ -20,26 +20,85 @@
         }
         return conn;
     };
-%><%
-    Connection conexion = getConnection();
-    if (!conexion.isClosed()){
-        Statement sentencia = conexion.createStatement();
+%><% //proceso
+//--abre conexión
+Connection conexion = getConnection();
+//--proceso escritura
+if (!conexion.isClosed()){
+    Statement sentencia = conexion.createStatement();
+     String ls_autor_B= request.getParameter("autor_B");    
+     String ls_titulo_B= request.getParameter("titulo_B");
+     String ls_query="";
+    
+    
+     if(ls_titulo_B != "" && ls_autor_B != "") {
+        ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
+        ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
+        ls_query += " or autor like " + "'%" + ls_autor_B +"%'";
+        //obtener cantidad de resultados        
+        ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%'"+" or autor like " + "'%" + ls_autor_B +"%';");
+        conteoSQL.next();
+        int cantidad = conteoSQL.getInt(1);
+        //obtener listado de libros
+        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
         
-        String tituloBuscar=request.getParameter("filter");
-        String ls_query = "";
-        
-        if(tituloBuscar != ""){
-            ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
-            ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
-            //obtener cantidad de resultados        
-            ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%';");
-            int cantidad = conteoSQL.getInt(1);
-            //obtener listado de libros
-            ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
-        
-        }
-        response.setStatus(200);
-        response.setHeader("Content-Type", "application/json");
     }
-    conexion.close();
+    else if (ls_titulo_B != "") {
+        ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
+        ls_query += " where titulo like " + "'%" + ls_titulo_B +"%'";
+        //obtener cantidad de resultados        
+        ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where titulo like " + "'%" +ls_titulo_B+ "%';");
+        int cantidad = conteoSQL.getInt(1);
+        conteoSQL.next();
+        //obtener listado de libros
+        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
+    }
+    else if (ls_autor_B != "") {
+        ls_query = " select libros.isbn, libros.titulo, libros.Editorial, libros.Anio, libros.autor from libros ";
+        ls_query += " where autor like " + "'%" + ls_autor_B +"%'";
+        //obtener cantidad de resultados        
+        ResultSet conteoSQL = sentencia.executeQuery("select count(*) from libros where autor like " + "'%" + ls_autor_B +"%';");
+        conteoSQL.next();
+        int cantidad = conteoSQL.getInt(1);
+        //obtener listado de libros
+        ResultSet conjuntoResultados = sentencia.executeQuery(ls_query );
+    }
+    
+    out.println("{");
+    out.println("   \"listado\":");
+    out.println("       [");
+    //inicio conteo manual
+    int numero = 1;
+    //Declaración formato JSON (final de elemento)
+    String cierreAux;
+    //mientras exista un siguiente valor...
+    while (conjuntoResultados.next()) {
+        //formato JSON (final de elemento)
+        cierreAux = "           }";
+        //si no está en la última tupla
+        if(numero != cantidad)
+            //añadir coma al final
+            cierreAux += ",";
+        //imprimir datos libro en formato JSON
+        out.println("           {");
+        out.println("               \"numero\":" + numero +", ");
+        out.println("               \"titulo\":\""+conjuntoResultados.getString("titulo")+"\", ");
+        out.println("               \"isbn\":\"" + conjuntoResultados.getString("isbn")+"\",");
+        out.println("               \"editorial\":\"" + conjuntoResultados.getString("Editorial")+"\",");
+        out.println("               \"fecha\":\"" + conjuntoResultados.getString("Anio")+"\",");
+        out.println("               \"autor\":\"" + conjuntoResultados.getString("autor")+"\"");
+        out.println(cierreAux);
+        //aumentar conteo manual
+        numero++;
+    } ;
+    //formato JSON
+    out.println("       ]");
+    out.println("}");
+    //añadir datos a la response: tipo de contenido y disposición en el header, estatus http 200 (OK)
+    response.setStatus(200);
+    response.setHeader("Content-Type", "application/json");
+    //response.setHeader("Content-Disposition", "attachment; filename=listado.json");
+}
+//--cierra conexión
+conexion.close();
 %>
