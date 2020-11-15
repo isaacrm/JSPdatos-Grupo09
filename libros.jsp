@@ -11,6 +11,7 @@
 
       <script type="text/javascript" src="metodos.js">
       </script>
+      <script type="text/javasscript" src="Buscar.js"></script>
 <!--
 Este es un botón con un único propósito de debug, eliminar antes de la entrega.
 Descomentar el botón para probar la función que actualiza la tabla.
@@ -44,6 +45,7 @@ if(lsfecha==null)
                <!--Cambiando disabled por readOnly. Para poder usarlo en metodo get-->
                 <%
                 String controlador=request.getParameter("control");
+                String eliminapara=request.getParameter("ELim");
                   String disa=request.getParameter("disa");
                 if(disa==null){disa="";}
                 else{
@@ -110,15 +112,17 @@ if(lsfecha==null)
             <tr>
                <td> Acción</td><td>
                   <%
-                     String valor1 = "", valor2 = "";
-                     if(!lsisbn.equals(""))
+                     String valor1 = "", valor2 = "",valor3="";
+                     if(!lsisbn.equals("")&!lstitulo.equals(""))
                         valor1 = "checked";
-                     else
+                     else if(!lsisbn.equals("")&lstitulo.equals(""))
                         valor2 = "checked";
+                        
+                        
                   %>
                   <input style="margin-left: 1%;" type="radio" id="actualizar" name="Action" value="Actualizar" <%=valor1%> /> Actualizar
-                  <input id="eliminar" type="radio" name="Action" value="Eliminar" /> Eliminar
-                  <input id="crear" type="radio" name="Action" value="Crear" <%=valor2%> /> Crear
+                  <input id="eliminar" type="radio" name="Action" value="Eliminar"<%=valor2%> /> Eliminar
+                  <input id="crear" type="radio" name="Action" value="Crear"  /> Crear
                   <input id="save" type="button" name="boton_A" onclick=guardar() value="GUARDAR"/>
                </td>
                <!--BOTON CON NOMBRE CAMBIADO-->
@@ -126,7 +130,7 @@ if(lsfecha==null)
          </table>
       </form>
       <!--INICIO DE AGREGADO POR EJERCICIO 3 (busqueda)-->
-      <form style="text-align:left;" name="formbusca" action="matto.jsp">
+      <form style="text-align:left;" name="formbusca"  >
          <!--INICIO DE AGREGADO EJERCICIO 6-->
          <table>
             <tr>
@@ -137,7 +141,7 @@ if(lsfecha==null)
             <tr>
                <td>
                   Título a buscar:</td><td id="campo">
-                  <input type="text" name="titulo_B" id="txtTitulo" placeholder="&nbsp;Ingrese un título..." size="55"/>
+                  <input type="text" name="titulo_B" id="txtTitulo" placeholder="&nbsp;Ingrese un título..." size="55" />
                </td>
             </tr>
             <tr>
@@ -148,7 +152,8 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  <center><input type="SUBMIT" name="boton_B" id="btnBuscar" value="BUSCAR" disabled/></center>
+                  <center><input type="SUBMIT"  id="btnBuscar" value="BUSCAR" 
+                     onclick= obtenerLibros2(titulo_B.value,autor_B.value) disabled/></center>
                </td>
             </tr>
          </table>
@@ -156,15 +161,18 @@ if(lsfecha==null)
       </form>
       <!--FIN DE AGREGADO POR EJERCICIO 3-->
       <!--INICIO AGREGADO VALIDACION DE BOTON BUSCAR EJERCICIO 6-->
+      
       <script type="text/javascript">
       //document.getElementsByClassName("delete").onclick = function() {myFunction()};
+      
       function myFunction(variable) {
       		//id = document.getElementsByClassName("isbn")
       		//document.getElementById("delete").innerHTML = "YOU CLICKED ME!";
       		console.log(variable);
       		var nuevaUrl = "matto.jsp?Action=Eliminar&isbn="+variable+"&boton_A=ACEPTAR";
       		//ventana = window.open(nuevaUrl);
-      		ventana = location.replace(nuevaUrl);
+            ventana = location.replace(nuevaUrl);
+           
       	}
 
       function habilitar(){
@@ -185,6 +193,7 @@ if(lsfecha==null)
       document.getElementById("txtAutor").addEventListener("keyup", habilitar);
       document.getElementById("btnBuscar").addEventListener("click", () => {});
       </script>
+      
       <form id="limpiar" name="formlimpiar">
          <input id="busqueda" type="submit" name="limpiar" value="LIMPIAR BÚSQUEDA">
       </form></div></center>
@@ -259,9 +268,11 @@ if(lsfecha==null)
                      out.println("<td>");%>
                      <form name='form<%=i%>'><!-- este formulario se mete para obtener los atributos para la actualizacion -->
                         <a id="actualizate" href="libros.jsp?posisbn=<%=isbnAux%>&postitulo=<%=tituloAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=1" style="width:100%;background-color:#style="width:10%;"">Actualizar</a>
+                        <a id="eliminate"  href="libros.jsp?posisbn=<%=isbnAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=3" style="width:100%" >Eliminar</a>
                      </form>
                      <%
-                     out.println("<a id='eliminate' style='width:100%;' onclick=myFunction('"+isbnAux+"')>Eliminar</a></td>");
+                     out.println("</td>");
+                     
                      out.println("</tr>");
                      i++;
                   }
