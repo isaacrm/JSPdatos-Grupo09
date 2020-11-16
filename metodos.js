@@ -1,6 +1,5 @@
-//Implementé este código (DESDE AQUÍ).
+//Esta función se ejecuta al presionar el botón 'GUARDAR'.
 function guardar() {
-   //Esta función se ejecuta al presionar el botón 'GUARDAR'.
    var isbn, titulo, autor, fecha, editorial;
    isbn = document.getElementById("isbn");
    titulo = document.getElementById("titulo");
