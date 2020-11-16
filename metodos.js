@@ -154,6 +154,8 @@ function limpiarBusqueda() {
    var autor = document.getElementById("txtAutor");
    titulo.value = "";
    autor.value = "";
+   limpiarFormulario();
+   document.getElementById("crear").checked = true;
    obtenerLibros();
 }
 
