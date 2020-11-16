@@ -258,7 +258,7 @@ if(lsfecha==null)
                      out.println("<td>"+autorAux+"</td>");
                      out.println("<td>");%>
                      <form name='form<%=i%>'><!-- este formulario se mete para obtener los atributos para la actualizacion -->
-                        <a id="actualizate" href="libros.jsp?posisbn=<%=isbnAux%>&postitulo=<%=tituloAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=1" style="width:100%;background-color:#style="width:10%;"">Actualizar</a>
+                        <a id="actualizate" onclick=editar() style="width:100%;">Actualizar</a>
                         <a id="eliminate"  href="libros.jsp?posisbn=<%=isbnAux%>&poseditorial=<%=editorialAux%>&posfecha=<%=fechaAux%>&posautor=<%=autorAux%>&disa=3" style="width:100%" >Eliminar</a>
                      </form>
                      <%
