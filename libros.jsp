@@ -113,14 +113,12 @@ if(lsfecha==null)
                      String valor1 = "", valor2 = "",valor3="";
                      if(!lsisbn.equals("")&!lstitulo.equals(""))
                         valor1 = "checked";
-                     else if(!lsisbn.equals("")&lstitulo.equals(""))
+                     else 
                         valor2 = "checked";
-                        
-                        
                   %>
                   <input style="margin-left: 1%;" type="radio" id="actualizar" name="Action" value="Actualizar" <%=valor1%> /> Actualizar
-                  <input id="eliminar" type="radio" name="Action" value="Eliminar"<%=valor2%> /> Eliminar
-                  <input id="crear" type="radio" name="Action" value="Crear"  /> Crear
+                  <input id="eliminar" type="radio" name="Action" value="Eliminar"/> Eliminar
+                  <input id="crear" type="radio" name="Action" value="Crear" <%=valor2%>/> Crear
                   <input id="save" type="button" name="boton_A" onclick=guardar() value="GUARDAR"/>
                </td>
                <!--BOTON CON NOMBRE CAMBIADO-->
