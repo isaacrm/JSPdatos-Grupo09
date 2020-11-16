@@ -147,7 +147,7 @@ if(lsfecha==null)
             </tr>
             <tr>
                <td>
-                  <center><input type="button"  id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/></center>
+                  <center><input type="button"  id="btnBuscar" value="BUSCAR" onclick="busqueda()" disabled/><input id="limpiarBusqueda" type="submit" name="limpiar" value="LIMPIAR BÚSQUEDA" onclick="limpiarBusqueda()"></center>
                </td>
             </tr>
          </table>
@@ -187,9 +187,7 @@ if(lsfecha==null)
       document.getElementById("btnBuscar").addEventListener("click", () => {});
       </script>
       
-      <form id="limpiar" name="formlimpiar">
-         <input id="busqueda" type="submit" name="limpiar" value="LIMPIAR BÚSQUEDA">
-      </form></div></center>
+      </div></center>
       <!--FIN AGREGADO VALIDACION DE BOTON BUSCAR EJERCICIO 6-->
 <br><h2>Listado de libros</h2>
       <div id="lista"><table><tr valign="top"><td><div id="descargas">

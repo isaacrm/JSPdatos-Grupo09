@@ -105,7 +105,14 @@ function guardar(){
                    ]
                 });
              }
-             
+function limpiarBusqueda(){
+   var titulo=document.getElementById("txtTitulo");
+   var autor=document.getElementById("txtAutor");
+   titulo.value="";
+   autor.value="";
+   obtenerLibros();
+}
+
 function busqueda(){
    var titulo_B,autor_B;
    titulo_B=document.getElementById("txtTitulo");
