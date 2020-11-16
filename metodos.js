@@ -141,7 +141,7 @@ function obtenerLibros() {
                //a ambos los debe envolver un solo <td>,
                //y despues de Eliminar se debe cerrar el <tr> que se abrió arriba
                rowsTabla += "<td><form name=\"form" + numeroAux + "\"><a id=\"actualizate\" onclick=editar() style=\"width:100%;\">Actualizar</a></form>";
-               rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=myFunction('" + isbnAux + "')>Eliminar</a></td></tr>";
+               rowsTabla += "<a id=\"eliminate\" style=\"width:100%;\" onclick=eliminarDeTabla('"+isbnAux+"')>Eliminar</a></td></tr>";
             }
             //anexar dentro de tbody, dentro de #tabla, las tuplas generadas
             $("#tabla tbody").append(rowsTabla);
@@ -247,3 +247,16 @@ function busqueda() {
    titulo_limp.value = "";
    autor_limp.value = "";
 }
+
+function eliminarDeTabla(isbn){
+   var confirmar;
+   confirmar=confirm("Estás seguro que deseas eliminar este registro?");
+   if(confirmar){
+     $.ajax({
+        type: "GET",
+        url: "matto.jsp?Action=Eliminar&isbn="+isbn+"&boton_A=ACEPTAR",
+        datatype: "json",
+        success: [function (response) {
+          obtenerLibros();
+          limpiarFormulario();
+          document.getElementById("crear").checked=true;}]});}}
