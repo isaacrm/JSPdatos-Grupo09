@@ -162,6 +162,10 @@ function busqueda() {
    var titulo_B, autor_B;
    titulo_B = document.getElementById("txtTitulo");
    autor_B = document.getElementById("txtAutor");
+   if (titulo_B.value.length < 1 || autor_B.value.length < 1) { 
+      alert("Introduzca un título o autor");
+      document.getElementById("txtTitulo").focus();
+   }
 
    if (document.getElementById("txtTitulo") != "" && document.getElementById("txtAutor") != "") {
       $.ajax({
